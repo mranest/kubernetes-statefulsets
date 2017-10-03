@@ -19,7 +19,7 @@ spec:
 # Setting clusterIP to None means headless service
 # Headless services set pod network id as per:
 #   https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#stable-network-id
-  clusterIP: None
+#  clusterIP: None
 ---
 kind: Service
 apiVersion: v1
