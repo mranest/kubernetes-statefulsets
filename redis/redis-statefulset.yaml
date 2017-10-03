@@ -39,7 +39,6 @@ spec:
             command: [ "redis-cli", "ping" ]
           initialDelaySeconds: 5
           timeoutSeconds: 1
-        imagePullPolicy: Always
         volumeMounts:
         - mountPath: /data
           name: data

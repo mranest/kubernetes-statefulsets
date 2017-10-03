@@ -36,7 +36,6 @@ spec:
             command: [ "redis-cli", "-p", "26379", "ping" ]
           initialDelaySeconds: 5
           timeoutSeconds: 1
-        imagePullPolicy: Always
         volumeMounts:
         - mountPath: /data
           name: redis
