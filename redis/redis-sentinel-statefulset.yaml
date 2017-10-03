@@ -44,6 +44,7 @@ spec:
           name: conf
         - mountPath: /etc/redis/templates
           name: config-map
+          readOnly: true
       volumes:
       - name : redis
         emptyDir: {}

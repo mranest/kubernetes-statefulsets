@@ -11,6 +11,6 @@ data:
     # Sentinel configuration template, with the following placeholders
     # - MASTER_IP
     sentinel monitor redis MASTER_IP 6379 2
-    sentinel down-after-milliseconds redis 60000
-    sentinel failover-timeout redis 180000
+    sentinel down-after-milliseconds redis 1000
+    sentinel failover-timeout redis 5000
     sentinel parallel-syncs redis 1

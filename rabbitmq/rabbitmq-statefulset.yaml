@@ -52,7 +52,17 @@ spec:
         - name: CLEANUP_WARN_ONLY
           value: "false"
         - name: RABBITMQ_ERLANG_COOKIE
-          value: "rabbitmq"
+          valueFrom:
+            secretKeyRef:
+              name: rabbitmq
+              key: erlang-cookie
+        - name: RABBITMQ_DEFAULT_USER
+          value: "admin"
+        - name: RABBITMQ_DEFAULT_PASS
+          valueFrom:
+            secretKeyRef:
+              name: rabbitmq
+              key: default-password
         - name: K8S_SERVICE_NAME
           value: "rabbitmq"
         - name: RABBITMQ_NODENAME

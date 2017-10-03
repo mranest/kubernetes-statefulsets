@@ -20,4 +20,3 @@ spec:
   ports:
   - port: 26379
     name: redis-sentinel
-  clusterIP: None
