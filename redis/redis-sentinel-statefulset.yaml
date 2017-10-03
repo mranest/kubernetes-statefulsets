@@ -1,0 +1,54 @@
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: redis-sentinel
+spec:
+  serviceName: redis-sentinel
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: redis-sentinel
+    spec:
+      containers:
+      - name: redis-sentinel
+        image: redis
+        ports:
+          - containerPort: 26379
+            name: redis-sentinel
+        command:
+        - bash
+        - "-c"
+        - |
+          MASTER_IP=$( getent hosts redis-0.redis | awk '{ print $1 }' )
+          
+          cp /etc/redis/templates/sentinel.conf /etc/redis
+          sed -i "s/MASTER_IP/$MASTER_IP/" /etc/redis/sentinel.conf
+
+          exec /usr/local/bin/docker-entrypoint.sh redis-sentinel /etc/redis/sentinel.conf
+        livenessProbe:
+          exec:
+            command: [ "redis-cli", "-p", "26379", "ping" ]
+          initialDelaySeconds: 30
+          timeoutSeconds: 5
+        readinessProbe:
+          exec:
+            command: [ "redis-cli", "-p", "26379", "ping" ]
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+        imagePullPolicy: Always
+        volumeMounts:
+        - mountPath: /data
+          name: redis
+        - mountPath: /etc/redis
+          name: conf
+        - mountPath: /etc/redis/templates
+          name: config-map
+      volumes:
+      - name : redis
+        emptyDir: {}
+      - name: conf
+        emptyDir: {}
+      - name: config-map
+        configMap:
+          name: redis

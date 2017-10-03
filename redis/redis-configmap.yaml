@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis
+  labels:
+    app: redis
+data:
+  redis.conf: |
+    # Redis configuration template
+  sentinel.conf: |
+    # Sentinel configuration template, with the following placeholders
+    # - MASTER_IP
+    sentinel monitor redis MASTER_IP 6379 2
+    sentinel down-after-milliseconds redis 60000
+    sentinel failover-timeout redis 180000
+    sentinel parallel-syncs redis 1
