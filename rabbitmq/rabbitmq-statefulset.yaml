@@ -65,4 +65,5 @@ spec:
           value: "rabbitmq@$(HOSTNAME)"
       volumes:
         - name : rabbitmq
-          emptyDir: {}
+          emptyDir:
+            medium: Memory
